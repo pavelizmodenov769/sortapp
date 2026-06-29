@@ -2,7 +2,7 @@ package com.team.sortapp.manual;
 
 import model.Student;
 
-public class ValidationExeptionTest {
+public class ValidationExceptionTest {
     public static void main(String[] args) {
 
         testValidStudent();

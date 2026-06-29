@@ -1,7 +1,5 @@
 package model;
 
-import exeption.ValidationExeption;
-
 import java.util.Objects;
 
 public class Student {
@@ -29,7 +27,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return  "группа - " + group +
+        return "группа - " + group +
                 "; средний балл - " + averageScore +
                 "; номер зачетной книжки - " + creditBook;
     }
@@ -71,8 +69,22 @@ public class Student {
         }
 
         public Student build() {
-            ValidationExeption.validate(group, averageScore, creditBook);
+            validate(group, averageScore, creditBook);
             return new Student(this);
+        }
+
+        private void validate(String group, double averageScore, String creditBook) {
+            if (group == null || group.isBlank()) {
+                throw new IllegalArgumentException("Укажите номер группы.");
+            }
+
+            if (averageScore < 0 || averageScore > 5) {
+                throw new IllegalArgumentException("Оценка не может быть меньше 0 и больше 5.");
+            }
+
+            if (creditBook == null || creditBook.isBlank()) {
+                throw new IllegalArgumentException("Укажите номер зачетной книжки.");
+            }
         }
     }
 }
