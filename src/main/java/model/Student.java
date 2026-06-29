@@ -1,5 +1,7 @@
 package model;
 
+import exeption.ValidationExeption;
+
 import java.util.Objects;
 
 public class Student {
@@ -69,6 +71,7 @@ public class Student {
         }
 
         public Student build() {
+            ValidationExeption.validate(group, avarageScore, creditBook);
             return new Student(this);
         }
     }
