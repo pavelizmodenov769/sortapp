@@ -6,12 +6,12 @@ import java.util.Objects;
 
 public class Student {
     private final String group;
-    private final double avarageScore;
+    private final double averageScore;
     private final String creditBook;
 
     private Student(Builder builder) {
         this.group = builder.group;
-        this.avarageScore = builder.avarageScore;
+        this.averageScore = builder.averageScore;
         this.creditBook = builder.creditBook;
     }
 
@@ -19,8 +19,8 @@ public class Student {
         return group;
     }
 
-    public double getAvarageScore() {
-        return avarageScore;
+    public double getAverageScore() {
+        return averageScore;
     }
 
     public String getCreditBook() {
@@ -30,7 +30,7 @@ public class Student {
     @Override
     public String toString() {
         return  "группа - " + group +
-                "; средний балл - " + avarageScore +
+                "; средний балл - " + averageScore +
                 "; номер зачетной книжки - " + creditBook;
     }
 
@@ -39,20 +39,20 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return Double.compare(avarageScore, student.avarageScore) == 0 &&
+        return Double.compare(averageScore, student.averageScore) == 0 &&
                 Objects.equals(group, student.group) &&
                 Objects.equals(creditBook, student.creditBook);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(group, avarageScore, creditBook);
+        return Objects.hash(group, averageScore, creditBook);
     }
 
     // Builder for Student
     public static class Builder {
         private String group;
-        private double avarageScore;
+        private double averageScore;
         private String creditBook;
 
         public Builder setGroup(String group) {
@@ -60,8 +60,8 @@ public class Student {
             return this;
         }
 
-        public Builder setAvaregeScore(double avaregeScore) {
-            this.avarageScore = avaregeScore;
+        public Builder setAverageScore(double averageScore) {
+            this.averageScore = averageScore;
             return this;
         }
 
@@ -71,7 +71,7 @@ public class Student {
         }
 
         public Student build() {
-            ValidationExeption.validate(group, avarageScore, creditBook);
+            ValidationExeption.validate(group, averageScore, creditBook);
             return new Student(this);
         }
     }

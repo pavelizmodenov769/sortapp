@@ -7,19 +7,19 @@ public class StudentManualTest {
     public static void main(String[] args) {
         Student student1 = new Student.Builder()
                 .setGroup("JAVA-102")
-                .setAvaregeScore(4.8)
+                .setAverageScore(4.8)
                 .setCreditBook("AA 102")
                 .build();
 
         Student student2 = new Student.Builder()
                 .setGroup("JAVA-102")
-                .setAvaregeScore(4.8)
+                .setAverageScore(4.8)
                 .setCreditBook("AA 102")
                 .build();
 
         Student student3 = new Student.Builder()
                 .setGroup("JAVA-103")
-                .setAvaregeScore(4.7)
+                .setAverageScore(4.7)
                 .setCreditBook("TT 103")
                 .build();
 

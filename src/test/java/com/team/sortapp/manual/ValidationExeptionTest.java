@@ -15,7 +15,7 @@ public class ValidationExeptionTest {
         try {
             Student student = new Student.Builder()
                     .setGroup("JAVA-102")
-                    .setAvaregeScore(4.8)
+                    .setAverageScore(4.8)
                     .setCreditBook("AA-102")
                     .build();
 
@@ -29,9 +29,9 @@ public class ValidationExeptionTest {
 
     private static void testEmptyGroup() {
         try {
-            Student student1 = new Student.Builder()
+            new Student.Builder()
                     .setGroup("")
-                    .setAvaregeScore(4.8)
+                    .setAverageScore(4.8)
                     .setCreditBook("AA-102")
                     .build();
 
@@ -44,9 +44,9 @@ public class ValidationExeptionTest {
 
     private static void testInvalidAvarageScore() {
         try {
-            Student student2 = new Student.Builder()
+            new Student.Builder()
                     .setGroup("JAVA-102")
-                    .setAvaregeScore(6)
+                    .setAverageScore(6)
                     .setCreditBook("AA-102")
                     .build();
 
@@ -59,9 +59,9 @@ public class ValidationExeptionTest {
 
     private static void testEmptyCreditBook() {
         try {
-            Student student3 = new Student.Builder()
+            new Student.Builder()
                     .setGroup("JAVA-102")
-                    .setAvaregeScore(4.8)
+                    .setAverageScore(4.8)
                     .setCreditBook("")
                     .build();
 
