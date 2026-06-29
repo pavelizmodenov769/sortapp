@@ -1,5 +1,6 @@
 package com.team.sortapp.manual;
 
+import exeption.ValidationException;
 import model.Student;
 
 public class ValidationExceptionTest {
@@ -7,7 +8,7 @@ public class ValidationExceptionTest {
 
         testValidStudent();
         testEmptyGroup();
-        testInvalidAvarageScore();
+        testInvalidAverageScore();
         testEmptyCreditBook();
     }
 
@@ -37,12 +38,12 @@ public class ValidationExceptionTest {
 
             System.out.println("testEmptyGroup FAILED");
 
-        } catch (Exception e) {
+        } catch (ValidationException e) {
             System.out.println("testEmptyGroup PASSED: " + e.getMessage());
         }
     }
 
-    private static void testInvalidAvarageScore() {
+    private static void testInvalidAverageScore() {
         try {
             new Student.Builder()
                     .setGroup("JAVA-102")
@@ -52,7 +53,7 @@ public class ValidationExceptionTest {
 
             System.out.println("testEmptyGroup FAILED");
 
-        } catch (Exception e) {
+        } catch (ValidationException e) {
             System.out.println("testEmptyGroup PASSED: " + e.getMessage());
         }
     }
@@ -67,7 +68,7 @@ public class ValidationExceptionTest {
 
             System.out.println("testEmptyGroup FAILED");
 
-        } catch (Exception e) {
+        } catch (ValidationException e) {
             System.out.println("testEmptyGroup PASSED: " + e.getMessage());
         }
     }
