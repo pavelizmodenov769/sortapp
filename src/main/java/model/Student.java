@@ -1,5 +1,7 @@
 package model;
 
+import exeption.ValidationException;
+
 import java.util.Objects;
 
 public class Student {
@@ -75,15 +77,15 @@ public class Student {
 
         private void validate(String group, double averageScore, String creditBook) {
             if (group == null || group.isBlank()) {
-                throw new IllegalArgumentException("Укажите номер группы.");
+                throw new ValidationException("Укажите номер группы.");
             }
 
             if (averageScore < 0 || averageScore > 5) {
-                throw new IllegalArgumentException("Оценка не может быть меньше 0 и больше 5.");
+                throw new ValidationException("Оценка не может быть меньше 0 и больше 5.");
             }
 
             if (creditBook == null || creditBook.isBlank()) {
-                throw new IllegalArgumentException("Укажите номер зачетной книжки.");
+                throw new ValidationException("Укажите номер зачетной книжки.");
             }
         }
     }
