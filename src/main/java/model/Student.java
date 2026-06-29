@@ -26,6 +26,13 @@ public class Student {
     }
 
     @Override
+    public String toString() {
+        return  "группа - " + group +
+                "; средний балл - " + avarageScore +
+                "; номер зачетной книжки - " + creditBook;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
