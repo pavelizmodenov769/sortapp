@@ -1,26 +1,26 @@
 package com.team.sortapp.manual;
 
-import model.Student;
+import com.team.sortapp.model.Student;
 
 public class StudentManualTest {
 
     public static void main(String[] args) {
-        Student student1 = new Student.Builder()
-                .setGroup("JAVA-102")
+        Student student1 = new Student.StudentBuilder()
+                .setGroup(102)
                 .setAverageScore(4.8)
-                .setCreditBook("AA 102")
+                .setCreditBook(111102L)
                 .build();
 
-        Student student2 = new Student.Builder()
-                .setGroup("JAVA-102")
+        Student student2 = new Student.StudentBuilder()
+                .setGroup(102)
                 .setAverageScore(4.8)
-                .setCreditBook("AA 102")
+                .setCreditBook(111102L)
                 .build();
 
-        Student student3 = new Student.Builder()
-                .setGroup("JAVA-103")
+        Student student3 = new Student.StudentBuilder()
+                .setGroup(103)
                 .setAverageScore(4.7)
-                .setCreditBook("TT 103")
+                .setCreditBook(111103L)
                 .build();
 
         System.out.println("Студент1: " + student1);

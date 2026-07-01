@@ -1,4 +1,4 @@
-package collection;
+package com.team.sortapp.collection;
 
 public interface CustomList<T> {
 

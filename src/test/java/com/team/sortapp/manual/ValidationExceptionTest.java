@@ -1,7 +1,7 @@
 package com.team.sortapp.manual;
 
-import exeption.ValidationException;
-import model.Student;
+import com.team.sortapp.exeption.ValidationException;
+import com.team.sortapp.model.Student;
 
 public class ValidationExceptionTest {
     public static void main(String[] args) {
@@ -10,14 +10,15 @@ public class ValidationExceptionTest {
         testEmptyGroup();
         testInvalidAverageScore();
         testEmptyCreditBook();
+        testNegativeCreditBook();
     }
 
     private static void testValidStudent() {
         try {
-            Student student = new Student.Builder()
-                    .setGroup("JAVA-102")
+            Student student = new Student.StudentBuilder()
+                    .setGroup(111102)
                     .setAverageScore(4.8)
-                    .setCreditBook("AA-102")
+                    .setCreditBook(111102L)
                     .build();
 
             System.out.print("testValidStudent PASSED");
@@ -30,10 +31,9 @@ public class ValidationExceptionTest {
 
     private static void testEmptyGroup() {
         try {
-            new Student.Builder()
-                    .setGroup("")
+            new Student.StudentBuilder()
                     .setAverageScore(4.8)
-                    .setCreditBook("AA-102")
+                    .setCreditBook(111102L)
                     .build();
 
             System.out.println("testEmptyGroup FAILED");
@@ -45,31 +45,45 @@ public class ValidationExceptionTest {
 
     private static void testInvalidAverageScore() {
         try {
-            new Student.Builder()
-                    .setGroup("JAVA-102")
-                    .setAverageScore(6)
-                    .setCreditBook("AA-102")
+            new Student.StudentBuilder()
+                    .setGroup(111102)
+                    .setAverageScore(5.5)
+                    .setCreditBook(111102L)
                     .build();
 
-            System.out.println("testEmptyGroup FAILED");
+            System.out.println("testInvalidAverageScore FAILED");
 
         } catch (ValidationException e) {
-            System.out.println("testEmptyGroup PASSED: " + e.getMessage());
+            System.out.println("testInvalidAverageScore PASSED: " + e.getMessage());
         }
     }
 
     private static void testEmptyCreditBook() {
         try {
-            new Student.Builder()
-                    .setGroup("JAVA-102")
+            new Student.StudentBuilder()
+                    .setGroup(111102)
                     .setAverageScore(4.8)
-                    .setCreditBook("")
                     .build();
 
-            System.out.println("testEmptyGroup FAILED");
+            System.out.println("testEmptyCreditBook FAILED");
 
         } catch (ValidationException e) {
-            System.out.println("testEmptyGroup PASSED: " + e.getMessage());
+            System.out.println("testEmptyCreditBook PASSED: " + e.getMessage());
+        }
+    }
+
+    private static void testNegativeCreditBook() {
+        try {
+            new Student.StudentBuilder()
+                    .setGroup(111102)
+                    .setAverageScore(4.8)
+                    .setCreditBook(-90087654L)
+                    .build();
+
+            System.out.println("testNegativeCreditBook FAILED");
+
+        } catch (ValidationException e) {
+            System.out.println("testNegativeCreditBook: " + e.getMessage());
         }
     }
 }
