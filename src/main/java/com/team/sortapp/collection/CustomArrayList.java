@@ -3,8 +3,9 @@ package com.team.sortapp.collection;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.function.Consumer;
 
-public class CustomArrayList<T> implements CustomList<T>, Iterable<T> {
+public class CustomArrayList<T> implements CustomList<T> {
 
     private static final int DEFAULT_CAPACITY = 10;
 
@@ -64,8 +65,28 @@ public class CustomArrayList<T> implements CustomList<T>, Iterable<T> {
     }
 
     @Override
+    public void clear() {
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
+        size = 0;
+    }
+
+    @Override
+    public void forEach(Consumer<? super T> action) {
+        for (int i = 0; i < size; i++) {
+            action.accept((T) elements[i]);
+        }
+    }
+
+    @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     private void ensureCapacity() {
