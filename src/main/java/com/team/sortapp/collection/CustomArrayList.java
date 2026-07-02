@@ -41,6 +41,9 @@ public class CustomArrayList<T> implements CustomList<T> {
         return (T) elements[index];
     }
 
+    // Unchecked cast безопасен: в elements могут лежать только объекты типа T,
+    // потому что все добавления проходят через add(T), а поле elements приватно.
+    @SuppressWarnings("unchecked")
     @Override
     public T set(int index, T element) {
         checkIndex(index);
@@ -50,6 +53,7 @@ public class CustomArrayList<T> implements CustomList<T> {
 
         return oldValue;
     }
+
     // Unchecked cast безопасен: в elements могут лежать только объекты типа T,
     // потому что все добавления проходят через add(T), а поле elements приватно.
     @SuppressWarnings("unchecked")
