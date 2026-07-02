@@ -1,6 +1,8 @@
 package com.team.sortapp.collection;
 
-public interface CustomList<T> {
+import java.util.function.Consumer;
+
+public interface CustomList<T> extends Iterable<T> {
 
     void add(T element);
 
@@ -8,7 +10,15 @@ public interface CustomList<T> {
 
     T set(int index, T element);
 
+    int size();
+
+    boolean isEmpty();
+
     T remove(int index);
 
-    int size();
+    void clear();
+
+    void forEach(Consumer<? super T> action);
+
+
 }
