@@ -1,4 +1,4 @@
-package collection;
+package com.team.sortapp.collection;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -39,7 +39,7 @@ public class CustomArrayList<T> implements CustomList<T>, Iterable<T> {
     }
 
     @Override
-    public T set(int index, Object element) {
+    public T set(int index, T element) {
         checkIndex(index);
 
         T oldValue = (T) elements[index];
@@ -60,7 +60,6 @@ public class CustomArrayList<T> implements CustomList<T>, Iterable<T> {
 
         elements[size - 1] = null;
         size--;
-
         return removed;
     }
 
@@ -78,11 +77,11 @@ public class CustomArrayList<T> implements CustomList<T>, Iterable<T> {
 
     private void checkIndex(int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index: " + index + "Size: " + size);
+            throw new IndexOutOfBoundsException("Индекс " + index + " вне диапазона [0, " + (size - 1) + "]");
         }
     }
 
-    // Итератор (CustomIterator)
+    // Итератор
     @Override
     public Iterator<T> iterator() {
         return new CustomIterator();

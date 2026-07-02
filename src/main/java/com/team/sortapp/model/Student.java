@@ -1,21 +1,21 @@
-package model;
+package com.team.sortapp.model;
 
-import exeption.ValidationException;
+import com.team.sortapp.exeption.ValidationException;
 
 import java.util.Objects;
 
 public class Student {
-    private final String group;
+    private final int group;
     private final double averageScore;
-    private final String creditBook;
+    private final long creditBook;
 
-    private Student(Builder builder) {
+    private Student(StudentBuilder builder) {
         this.group = builder.group;
         this.averageScore = builder.averageScore;
         this.creditBook = builder.creditBook;
     }
 
-    public String getGroup() {
+    public int getGroup() {
         return group;
     }
 
@@ -23,7 +23,7 @@ public class Student {
         return averageScore;
     }
 
-    public String getCreditBook() {
+    public long getCreditBook() {
         return creditBook;
     }
 
@@ -50,42 +50,52 @@ public class Student {
     }
 
     // Builder for Student
-    public static class Builder {
-        private String group;
-        private double averageScore;
-        private String creditBook;
+    // Обёртки, чтобы отличать "не установлено"
 
-        public Builder setGroup(String group) {
+    public static class StudentBuilder {
+        private Integer group;
+        private Double averageScore;
+        private Long creditBook;
+
+        public StudentBuilder setGroup(Integer group) {
             this.group = group;
             return this;
         }
 
-        public Builder setAverageScore(double averageScore) {
+        public StudentBuilder setAverageScore(Double averageScore) {
             this.averageScore = averageScore;
             return this;
         }
 
-        public Builder setCreditBook(String creditBook) {
+        public StudentBuilder setCreditBook(Long creditBook) {
             this.creditBook = creditBook;
             return this;
         }
 
         public Student build() {
-            validate(group, averageScore, creditBook);
+            validate();
             return new Student(this);
         }
 
-        private void validate(String group, double averageScore, String creditBook) {
-            if (group == null || group.isBlank()) {
-                throw new ValidationException("Укажите номер группы.");
+        private void validate() {
+            if (group == null) {
+                throw new ValidationException("Не указан номер группы.");
+            }
+
+            if (averageScore == null) {
+                throw new ValidationException("Средний балл не указан.");
             }
 
             if (averageScore < 0 || averageScore > 5) {
                 throw new ValidationException("Оценка не может быть меньше 0 и больше 5.");
             }
 
-            if (creditBook == null || creditBook.isBlank()) {
-                throw new ValidationException("Укажите номер зачетной книжки.");
+            if (creditBook == null) {
+                throw new ValidationException("Номер зачетной книжки не указан.");
+            }
+
+            if (creditBook < 0) {
+                throw new ValidationException("Номер зачетной книжки не может быть отрицательным.");
             }
         }
     }
