@@ -65,14 +65,6 @@ public class CustomArrayList<T> implements CustomList<T> {
     }
 
     @Override
-    public void clear() {
-        for (int i = 0; i < size; i++) {
-            elements[i] = null;
-        }
-        size = 0;
-    }
-
-    @Override
     public void forEach(Consumer<? super T> action) {
         for (int i = 0; i < size; i++) {
             action.accept((T) elements[i]);

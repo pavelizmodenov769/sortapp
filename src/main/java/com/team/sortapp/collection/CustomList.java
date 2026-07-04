@@ -16,8 +16,6 @@ public interface CustomList<T> extends Iterable<T> {
 
     T remove(int index);
 
-    void clear();
-
     void forEach(Consumer<? super T> action);
 
 
