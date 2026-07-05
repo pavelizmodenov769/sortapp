@@ -3,7 +3,6 @@ package com.team.sortapp.collection;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.function.Consumer;
 
 public class CustomArrayList<T> implements CustomList<T> {
 
@@ -62,13 +61,6 @@ public class CustomArrayList<T> implements CustomList<T> {
         elements[size - 1] = null;
         size--;
         return removed;
-    }
-
-    @Override
-    public void forEach(Consumer<? super T> action) {
-        for (int i = 0; i < size; i++) {
-            action.accept((T) elements[i]);
-        }
     }
 
     @Override
