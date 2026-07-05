@@ -1,6 +1,6 @@
 package com.team.sortapp.model;
 
-import com.team.sortapp.exeption.ValidationException;
+import com.team.sortapp.exception.ValidationException;
 
 import java.util.Objects;
 
