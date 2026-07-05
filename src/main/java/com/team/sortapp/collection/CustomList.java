@@ -10,6 +10,8 @@ public interface CustomList<T> extends Iterable<T> {
 
     T set(int index, T element);
 
+    T remove(int index);
+
     int size();
 
     boolean isEmpty();
