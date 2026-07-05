@@ -56,7 +56,7 @@ public class CustomArrayListManualTest {
         for (String str : list) {
             System.out.print(str + ", ");
         }
-        System.out.println(" ");
+        System.out.println();
         System.out.println("Замененный элемент: " + oldElement);
         System.out.println("------------------------------------");
 
@@ -66,8 +66,40 @@ public class CustomArrayListManualTest {
         for (String s : list) {
             System.out.print(s + ", ");
         }
-        System.out.println(" ");
+        System.out.println();
 
         System.out.println("Удаленный элемент: " + removeElement);
+        System.out.println("------------------------------------");
+
+        // Очистка списка и isEmpty
+        System.out.println("Список до очистки: ");
+        System.out.println("   size = " + list.size());
+        System.out.println("   isEmpty = " + list.isEmpty());
+        System.out.println();
+
+        list.clear();
+
+        System.out.println("Список после очистки: ");
+        System.out.println("   size = " + list.size());
+        System.out.println("   isEmpty = " + list.isEmpty());
+        System.out.println();
+
+        System.out.println("Проход через for-each: ");
+        boolean anyElement = false;
+        for (String s : list) {
+            anyElement = true;
+            System.out.print(s + " ");
+        }
+        if (!anyElement) {
+            System.out.print("<ничего не выведено>");
+        }
+        System.out.println();
+        System.out.println();
+
+        list.add("Element 1");
+
+        System.out.println("Список после очистки и добавления одного элемента: ");
+        System.out.println("   size = " + list.size());
+        System.out.println("   isEmpty = " + list.isEmpty());
     }
 }
