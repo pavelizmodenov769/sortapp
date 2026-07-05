@@ -31,19 +31,13 @@ public class CustomArrayList<T> implements CustomList<T> {
         elements[size++] = element;
 
     }
-    // Возвращает элемент по индексу.
-    // Unchecked cast безопасен, потому что в elements хранятся только объекты типа Т,
-    // добавленные через add(T).
+
     @Override
-    @SuppressWarnings("unchecked")
     public T get(int index) {
         checkIndex(index);
         return (T) elements[index];
     }
 
-    // Unchecked cast безопасен: в elements могут лежать только объекты типа T,
-    // потому что все добавления проходят через add(T), а поле elements приватно.
-    @SuppressWarnings("unchecked")
     @Override
     public T set(int index, T element) {
         checkIndex(index);
@@ -54,9 +48,6 @@ public class CustomArrayList<T> implements CustomList<T> {
         return oldValue;
     }
 
-    // Unchecked cast безопасен: в elements могут лежать только объекты типа T,
-    // потому что все добавления проходят через add(T), а поле elements приватно.
-    @SuppressWarnings("unchecked")
     @Override
     public T remove(int index) {
         checkIndex(index);
@@ -73,22 +64,13 @@ public class CustomArrayList<T> implements CustomList<T> {
     }
 
     @Override
-    public void clear() {
-        size = 0;
-
-        for (int i = 0; i < elements.length; i++) {
-            elements[i] = null;
-        }
+    public int size() {
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
         return size == 0;
-    }
-
-    @Override
-    public int size() {
-        return size;
     }
 
     private void ensureCapacity() {
@@ -118,12 +100,7 @@ public class CustomArrayList<T> implements CustomList<T> {
             return currentIndex < size;
         }
 
-        // Unchecked cast безопасен: в elements могут лежать только объекты типа T,
-        // потому что все добавления проходят через add(T), а поле elements приватно.
-        // hasNext() и currentIndex гарантируют, что мы читаем только занятые ячейки.
-
         @Override
-        @SuppressWarnings("unchecked")
         public T next() {
             if (!hasNext()) {
                 throw new NoSuchElementException("Элемент не найден.");
