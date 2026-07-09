@@ -1,4 +1,4 @@
-package io;
+package com.team.sortapp.io.io;
 
 import com.team.sortapp.collection.CustomList;
 import com.team.sortapp.model.Student;
@@ -6,6 +6,7 @@ import com.team.sortapp.model.Student;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -28,5 +29,8 @@ public class ResultWriter {
         } catch (IOException e) {
             System.out.println(" Ошибка при записи результатов в файл: " + e.getMessage());
         }
+    }
+
+    public static void appendToFile(Path path, CustomList<Student> students) {
     }
 }

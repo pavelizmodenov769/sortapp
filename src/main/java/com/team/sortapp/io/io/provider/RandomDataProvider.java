@@ -1,8 +1,8 @@
-package io.provider;
+package com.team.sortapp.io.io.provider;
 
 import com.team.sortapp.collection.CustomList;
 import com.team.sortapp.model.Student;
-import io.util.CollectionFiller;
+import com.team.sortapp.io.io.util.CollectionFiller;
 
 import java.util.Random;
 import java.util.stream.Stream;

@@ -1,10 +1,10 @@
-package io.provider;
+package com.team.sortapp.io.io.provider;
 
 import com.team.sortapp.collection.CustomList;
 import com.team.sortapp.exeption.ValidationException;
 import com.team.sortapp.model.Student;
-import io.util.CollectionFiller;
-import io.util.StudentValidator;
+import com.team.sortapp.io.io.util.CollectionFiller;
+import com.team.sortapp.io.io.util.StudentValidator;
 
 import java.io.IOException;
 import java.nio.file.Files;

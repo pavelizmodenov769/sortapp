@@ -54,7 +54,7 @@ public class Institute {
     public static class InstituteBuilder {
         private String faculty;
         private String department;
-        private Integer numberOfTeachers;
+        private int numberOfTeachers;
 
         public InstituteBuilder faculty(String faculty) {
             this.faculty = faculty;
@@ -66,7 +66,7 @@ public class Institute {
             return this;
         }
 
-        public InstituteBuilder numberOfTeacher(Integer numberOfTeachers) {
+        public InstituteBuilder numberOfTeacher(int numberOfTeachers) {
             this.numberOfTeachers = numberOfTeachers;
             return this;
         }
@@ -77,7 +77,7 @@ public class Institute {
         }
 
         private void validateInstitute() {
-            if (numberOfTeachers == null) {
+            if (numberOfTeachers <= 0) {
                 throw new ValidationException("Не указано количество преподавателей.");
             }
 
