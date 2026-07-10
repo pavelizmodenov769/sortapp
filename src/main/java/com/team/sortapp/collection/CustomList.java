@@ -1,6 +1,5 @@
 package com.team.sortapp.collection;
 
-import java.util.function.Consumer;
 
 public interface CustomList<T> extends Iterable<T> {
 
@@ -16,8 +15,6 @@ public interface CustomList<T> extends Iterable<T> {
 
     boolean isEmpty();
 
-    T remove(int index);
-
-
+    void clear();
 
 }

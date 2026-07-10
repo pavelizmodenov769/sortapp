@@ -1,6 +1,7 @@
 package com.team.sortapp.sorting;
 
 import com.team.sortapp.collection.CustomList;
+
 import java.util.Comparator;
 
 public class SortContext<T> {

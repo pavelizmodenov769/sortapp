@@ -1,6 +1,7 @@
 package com.team.sortapp.sorting.comparator;
 
 import com.team.sortapp.model.Student;
+
 import java.util.Comparator;
 
 public class StudentScoreComparator implements Comparator<Student> {

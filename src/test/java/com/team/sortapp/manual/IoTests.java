@@ -1,11 +1,11 @@
 package com.team.sortapp.manual;
 
 import com.team.sortapp.collection.CustomList;
-import com.team.sortapp.exeption.ValidationException;
+import com.team.sortapp.exception.ValidationException;
 import com.team.sortapp.model.Student;
-import io.provider.RandomDataProvider;
-import io.ResultWriter;
-import io.util.StudentValidator;
+import com.team.sortapp.io.provider.RandomDataProvider;
+import com.team.sortapp.io.ResultWriter;
+import com.team.sortapp.io.util.StudentValidator;
 
 import java.io.IOException;
 import java.nio.file.Files;

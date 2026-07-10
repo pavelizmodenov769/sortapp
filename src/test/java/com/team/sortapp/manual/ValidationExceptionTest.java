@@ -47,7 +47,7 @@ public class ValidationExceptionTest {
         try {
             new Student.StudentBuilder()
                     .setGroup(111102)
-                    .setAverageScore(5.5)
+                    .setAverageScore(10.5)
                     .setCreditBook(111102L)
                     .build();
 
