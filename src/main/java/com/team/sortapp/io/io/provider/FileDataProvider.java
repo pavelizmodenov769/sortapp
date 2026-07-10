@@ -1,7 +1,7 @@
 package com.team.sortapp.io.io.provider;
 
 import com.team.sortapp.collection.CustomList;
-import com.team.sortapp.exeption.ValidationException;
+import com.team.sortapp.exception.ValidationException;
 import com.team.sortapp.model.Student;
 import com.team.sortapp.io.io.util.CollectionFiller;
 import com.team.sortapp.io.io.util.StudentValidator;

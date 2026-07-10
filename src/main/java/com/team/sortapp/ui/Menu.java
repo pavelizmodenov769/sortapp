@@ -1,5 +1,6 @@
 package com.team.sortapp.ui;
 
+import com.team.sortapp.collection.CustomArrayList;
 import com.team.sortapp.collection.CustomList;
 import com.team.sortapp.concurrent.OccurrenceCounter;
 import com.team.sortapp.io.io.provider.DataProvider;
@@ -505,6 +506,118 @@ public class Menu {
     }
 
     private void applicantAdd() {
+        System.out.println(" Новый абитуриент ");
+        String name = readString(" Имя: ", false);
+        String lastname = readString(" Фамилия: ", false);
+        int score = readInt(" Балл ЕГЭ (0-400): ",0,400);
 
+        UniversityApplicant a = new UniversityApplicant.UniversityApplicantBuilder()
+                .name(name)
+                .lastName(lastname)
+                .totalExamScore(score)
+                .build();
+
+        if (applicants == null) {
+            applicants = new CustomArrayList<>();
+        }
+        applicants.add(a);
+        System.out.println(" Добавлен: " + a);
+    }
+
+    private void applicantView() {
+        if (applicants == null || applicants.isEmpty()) {
+            System.out.println(" Список абитуриентов пуст.");
+            return;
+        }
+        System.out.println("  ┌────────────────────────────────────────────┐");
+        System.out.println("  │  № │ Фамилия       │ Имя          │ Балл   │");
+        System.out.println("  ├───┼───────────────┼──────────────┼────────┤");
+        for (int i = 0; i < applicants.size(); i++) {
+            UniversityApplicant a = applicants.get(i);
+            System.out.printf("  │ %2d │ %-13s │ %-12s │ %4d   │%n",
+                    i + 1, a.getLastName(), a.getName(), a.getExamScore());
+        }
+        System.out.println("  └────────────────────────────────────────────┘");
+    }
+
+    private void applicantEdit() {
+        if (applicants == null || applicants.isEmpty()) {
+            System.out.println(" Список абитуриентов пуст");
+            return;
+        }
+
+        System.out.println(" Текущий список:");
+        for (int i=0; i < applicants.size(); i++) {
+            System.out.println("   " + (i + 1) + ". " + applicants.get(i));
+        }
+
+        int index = readInt(" Номер записи для редактирования (1-" +applicants.size() + "):",
+                1, applicants.size());
+        UniversityApplicant old = applicants.get(index - 1);
+
+        System.out.println(" Текущее значение (Enter = оставить без изменений):");
+        String name = readString(" Имя [" + old.getName() + "]: ", true);
+        if (name.isEmpty()) {
+            name = old.getName();
+        }
+        String lastname = readString(" Фамилия [" + old.getLastName() + "]: ", true);
+        if (lastname.isEmpty()) {
+            lastname = old.getLastName();
+        }
+        String scoreStr = readString(" Балл[" + old.getExamScore() + "]: ", true);
+        int score;
+        if (scoreStr.isEmpty()) {
+            score = old.getExamScore();
+        } else {
+            score = readInt(" Новый балл ЕГЭ (0-400): ",0,400);
+        }
+
+        UniversityApplicant updated = new UniversityApplicant.UniversityApplicantBuilder()
+                .name(name)
+                .lastName(lastname)
+                .totalExamScore(score)
+                .build();
+
+        applicants.set(index - 1, updated);
+        System.out.println(" Обновлено: " + updated);
+    }
+
+    private void applicantDelete() {
+        if (applicants == null || applicants.isEmpty()) {
+            System.out.println(" Список абитуриентов пуст.");
+            return;
+        }
+
+        System.out.println(" Текущий список:");
+        for (int i = 0; i < applicants.size(); i++) {
+            System.out.println("   " + (i + 1) + ". " + applicants.get(i));
+        }
+
+        int index = readInt(" Номер записи для удаления (1-" + applicants.size() + "): ",
+                1, applicants.size());
+        UniversityApplicant removed = applicants.remove(index - 1);
+        System.out.println(" Удален: " + removed);
+    }
+
+    private void applicantSortByScore() {
+        if (applicants == null || applicants.isEmpty()) {
+            System.out.println(" Список абитуриентов пуст.");
+            return;
+        }
+
+        int n = applicants.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1 - j; j++) {
+                UniversityApplicant a = applicants.get(j);
+                UniversityApplicant b = applicants.get(j + 1);
+                if (a.getExamScore() < b.getExamScore()) {
+                    applicants.set(j, b);
+                    applicants.set(j + 1, a);
+                }
+            }
+        }
+
+        System.out.println(" Абитуриенты отсортированы по баллу ЕГЭ (убывание): ");
+        applicantView();
     }
 }
