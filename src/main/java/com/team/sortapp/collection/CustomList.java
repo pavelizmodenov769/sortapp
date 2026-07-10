@@ -16,6 +16,6 @@ public interface CustomList<T> extends Iterable<T> {
 
     boolean isEmpty();
 
-
+    void clear();
 
 }

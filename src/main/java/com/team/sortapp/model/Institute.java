@@ -30,7 +30,7 @@ public class Institute {
     @Override
     public String toString() {
         return "Информация об институте: " +
-                "факультет:" + faculty +
+                "Факультет: " + faculty +
                 ", Кафедра: " + department +
                 ", количество преподавателей: " + numberOfTeachers;
     }

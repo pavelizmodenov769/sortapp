@@ -73,6 +73,14 @@ public class CustomArrayList<T> implements CustomList<T> {
         return size == 0;
     }
 
+    @Override
+    public void clear() {
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
+        size = 0;
+    }
+
     private void ensureCapacity() {
         if (size == elements.length) {
             int newCapacity = elements.length + elements.length / 2 + 1;

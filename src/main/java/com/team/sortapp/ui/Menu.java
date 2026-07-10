@@ -3,10 +3,10 @@ package com.team.sortapp.ui;
 import com.team.sortapp.collection.CustomArrayList;
 import com.team.sortapp.collection.CustomList;
 import com.team.sortapp.concurrent.OccurrenceCounter;
-import com.team.sortapp.io.io.provider.DataProvider;
-import com.team.sortapp.io.io.provider.FileDataProvider;
-import com.team.sortapp.io.io.provider.ManualDataProvider;
-import com.team.sortapp.io.io.provider.RandomDataProvider;
+import com.team.sortapp.io.provider.DataProvider;
+import com.team.sortapp.io.provider.FileDataProvider;
+import com.team.sortapp.io.provider.ManualDataProvider;
+import com.team.sortapp.io.provider.RandomDataProvider;
 import com.team.sortapp.model.Institute;
 import com.team.sortapp.model.Student;
 import com.team.sortapp.model.UniversityApplicant;
@@ -14,7 +14,7 @@ import com.team.sortapp.sorting.*;
 import com.team.sortapp.sorting.comparator.StudentGradeBookComparator;
 import com.team.sortapp.sorting.comparator.StudentGroupComparator;
 import com.team.sortapp.sorting.comparator.StudentScoreComparator;
-import com.team.sortapp.io.io.ResultWriter;
+import com.team.sortapp.io.ResultWriter;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +31,8 @@ public class Menu {
     private SortContext<Student> sortContext;
 
     private Comparator<Student> currentComparator;
+
+    private FieldValueExtractor currentExtractor = Student::getGroup;
 
     private boolean useEvenNaturalSort = false;
 
@@ -63,9 +65,9 @@ public class Menu {
         this.running = false;
     }
 
-    private String readString(String promt, boolean blankOk) {
+    private String readString(String prompt, boolean blankOk) {
         while (true) {
-            System.out.println(promt);
+            System.out.println(prompt);
             String line = scanner.nextLine().trim();
             if (!line.isEmpty() || blankOk) {
                 return line;
@@ -74,9 +76,9 @@ public class Menu {
         }
     }
 
-    private int readInt(String promt, int min, int max) {
+    private int readInt(String prompt, int min, int max) {
         while (true) {
-            System.out.println(promt);
+            System.out.println(prompt);
             String line = scanner.nextLine().trim();
             try {
                 int value = Integer.parseInt(line);
@@ -91,9 +93,9 @@ public class Menu {
         }
     }
 
-    private long readLong(String promt) {
+    private long readLong(String prompt) {
         while (true) {
-            System.out.println(promt);
+            System.out.println(prompt);
             String line = scanner.nextLine().trim();
             try {
                 long value = Long.parseLong(line);
@@ -185,13 +187,13 @@ public class Menu {
             return;
         }
 
-        String faculity = readString(" Институт: ", false);
-        String departament = readString(" Факультет: ", false);
+        String faculty = readString(" Факультет: ", false);
+        String department = readString(" Кафедра: ", false);
         int teachers = readInt(" Количество преподавателей: ", 1, 10_000);
 
         institute = new Institute.InstituteBuilder()
-                .faculty(faculity)
-                .department(departament)
+                .faculty(faculty)
+                .department(department)
                 .numberOfTeacher(teachers)
                 .build();
 
@@ -204,18 +206,18 @@ public class Menu {
             return;
         }
         System.out.println("  ┌─── Информация об институте ─────────────┐");
-        System.out.println("  │ Институт:             " + padLable(institute.getFaculty()));
-        System.out.println("  │ Факультет:               " + padLable(institute.getDepartment()));
-        System.out.println("  │ Кол-во преподавателей: " + padLable(String.valueOf(institute.getNumberOfTeachers())));
+        System.out.println("  │ Факультет:           " + padLabel(institute.getFaculty()));
+        System.out.println("  │ Кафедра:             " + padLabel(institute.getDepartment()));
+        System.out.println("  │ Кол-во преподавателей: " + padLabel(String.valueOf(institute.getNumberOfTeachers())));
         System.out.println("  └────────────────────────────────────────┘");
     }
 
-    private static String padLable(String value) {
+    private static String padLabel(String value) {
         final int width = 16;
         if (value.length() > width) {
-            value = value.substring(0, width -2) + "..";
+            value = value.substring(0, width - 2) + "..";
         }
-        return String.format("%-" + width +"s|", value);
+        return String.format("%-" + width + "s|", value);
     }
 
     private void instituteEdit() {
@@ -224,25 +226,25 @@ public class Menu {
             return;
         }
         System.out.println(" Текущее значение (Enter = оставить без изменений):");
-        String faculity = readString(" Институт [" + institute.getFaculty() + "] ", true);
-        if (faculity.isEmpty()) {
-            faculity = institute.getDepartment();
+        String faculty = readString(" Факультет [" + institute.getFaculty() + "]: ", true);
+        if (faculty.isEmpty()) {
+            faculty = institute.getFaculty();
         }
-        String departament = readString(" Факультет [" +institute.getDepartment() + "]: ", true);
-        if (departament.isEmpty()) {
-            departament = institute.getDepartment();
+        String department = readString(" Кафедра [" + institute.getDepartment() + "]: ", true);
+        if (department.isEmpty()) {
+            department = institute.getDepartment();
         }
         String teachersStr = readString(" Преподаватели [" + institute.getNumberOfTeachers() + "] ", true);
         int teachers;
         if (teachersStr.isEmpty()) {
             teachers = institute.getNumberOfTeachers();
         } else {
-            teachers = readInt(" Колличество преподавателей ", 1,10_000);
+            teachers = readInt(" Количество преподавателей: ", 1, 10_000);
         }
 
         institute = new Institute.InstituteBuilder()
-                .faculty(faculity)
-                .department(departament)
+                .faculty(faculty)
+                .department(department)
                 .numberOfTeacher(teachers)
                 .build();
 
@@ -262,8 +264,8 @@ public class Menu {
 
     private void runStudentsMenu() {
         while (running) {
-            printSudentsMenu();
-            int choice = readInt("Ваш выбор: ",1,8);
+            printStudentsMenu();
+            int choice = readInt("Ваш выбор: ", 1, 8);
             try {
                 switch (choice) {
                     case 1 -> handleFillCollection();
@@ -284,7 +286,7 @@ public class Menu {
         }
     }
 
-    private void printSudentsMenu() {
+    private void printStudentsMenu() {
         System.out.println("  ┌─── СТУДЕНТЫ ───────────────────────────┐");
         System.out.println("  │ 1. Заполнить коллекцию                 │");
         System.out.println("  │ 2. Выбрать алгоритм сортировки         │");
@@ -297,7 +299,7 @@ public class Menu {
         System.out.println("  └────────────────────────────────────────┘");
         System.out.println(" Алгоритм: " + sortContext.getStrategyName() +
                 (useEvenNaturalSort ? " + чет/нечет" : ""));
-        if (students !=null && !students.isEmpty()) {
+        if (students != null && !students.isEmpty()) {
             System.out.println(" Коллекция: " + students.size() + " студентов");
         } else {
             System.out.println(" Коллекция пуста");
@@ -320,14 +322,14 @@ public class Menu {
     }
 
     private void fillRandom() {
-        int count = readInt(" Колличество студентов: ",1,100_000);
+        int count = readInt(" Количество студентов: ", 1, 100_000);
         DataProvider provider = new RandomDataProvider();
         students = provider.provide(count);
         System.out.println(" Коллекция заполнена: " + students.size() + " студентов.");
     }
 
     private void fillManual() {
-        int count = readInt(" Колличество студентов: ",1,10_000);
+        int count = readInt(" Количество студентов: ", 1, 10_000);
         DataProvider provider = new ManualDataProvider(scanner);
         students = provider.provide(count);
         System.out.println(" Введено: " + students.size() + " студентов.");
@@ -343,8 +345,8 @@ public class Menu {
             return;
         }
 
-        int maxCount = readInt(" Максимум записей для чтения: ", 0,100_000);
-        int count = (maxCount == 0) ? Integer.MAX_VALUE: maxCount;
+        int maxCount = readInt(" Максимум записей для чтения: ", 0, 100_000);
+        int count = (maxCount == 0) ? Integer.MAX_VALUE : maxCount;
 
         DataProvider provider = new FileDataProvider(path);
         students = provider.provide(count);
@@ -378,34 +380,49 @@ public class Menu {
         switch (choice) {
             case 1 -> {
                 currentComparator = new StudentGroupComparator();
+                currentExtractor = Student::getGroup;
                 useEvenNaturalSort = false;
                 System.out.println(" Поле: номер группы");
             }
             case 2 -> {
                 currentComparator = new StudentScoreComparator();
+                currentExtractor = Student::getGroup;
                 useEvenNaturalSort = false;
                 System.out.println(" Поле: средний балл");
             }
             case 3 -> {
                 currentComparator = new StudentGradeBookComparator();
+                currentExtractor = Student::getCreditBook;
                 useEvenNaturalSort = false;
                 System.out.println(" Поле: номер зачетной книжки");
             }
             case 4 -> {
+                System.out.println("  Поле для чёт/нечёт сортировки:");
+                System.out.println("    1 — Номер группы");
+                System.out.println("    2 — Номер зачётной книжки");
+                int field = readInt("  Выберите поле (1-2): ", 1, 2);
+                if (field == 1) {
+                    currentComparator = new StudentGroupComparator();
+                    currentExtractor = Student::getGroup;
+                    System.out.println(" Режим: чет-натурал / нечет-фикс (по группе)");
+                } else {
+                    currentComparator = new StudentGradeBookComparator();
+                    currentExtractor = Student::getCreditBook;
+                    System.out.println(" Режим: чет-натурал / нечет-фикс (по зачётке)");
+                }
                 useEvenNaturalSort = true;
-                System.out.println(" Режим: чет-натурал / нечет-фикс");
             }
         }
     }
 
     private void handleSortAndShow() {
-        if (students == null | students.isEmpty()) {
+        if (students == null || students.isEmpty()) {
             System.out.println(" Коллекция пуста. Сначала заполните (п.1)");
             return;
         }
 
         if (useEvenNaturalSort) {
-            SortStrategy<Student> evenStrategy = new EvenOddSortStrategy();
+            SortStrategy<Student> evenStrategy = new EvenOddSortStrategy(new BubbleSort<>(), currentExtractor);
             SortContext<Student> evenCtx = new SortContext<>(evenStrategy);
             evenCtx.sort(students, currentComparator);
         } else {
@@ -432,7 +449,7 @@ public class Menu {
         try {
             ResultWriter.appendToFile(path, students);
             System.out.println(" Записано " + students.size()
-                    + " студентов в " + path + " (режим append)." );
+                    + " студентов в " + path + " (режим append).");
         } catch (Exception e) {
             System.out.println(" Ошибка записи: " + e.getMessage());
         }
@@ -454,7 +471,7 @@ public class Menu {
             System.out.println(" Коллекция пуста. Сначала заполните (п.1).");
             return;
         }
-        System.out.println(" Текущая коллекция (" + students.size() + " записей.");
+        System.out.println(" Текущая коллекция (" + students.size() + " записей).");
         printStudentList(students);
     }
 
@@ -469,7 +486,7 @@ public class Menu {
     private void runApplicantsMenu() {
         while (running) {
             printApplicantsMenu();
-            int choice = readInt(" Ваш выбор: ",1,6);
+            int choice = readInt(" Ваш выбор: ", 1, 6);
             try {
                 switch (choice) {
                     case 1 -> applicantAdd();
@@ -497,10 +514,10 @@ public class Menu {
         System.out.println("  │ 5. Отсортировать по баллу ЕГЭ          │");
         System.out.println("  │ 6. Назад                               │");
         System.out.println("  └────────────────────────────────────────┘");
-        if (applicants != null & !applicants.isEmpty()) {
-            System.out.println(" Абитуриентов нет: " + applicants.size());
-        } else {
+        if (applicants == null || applicants.isEmpty()) {
             System.out.println(" Список пуст.");
+        } else {
+            System.out.println(" Абитуриентов: " + applicants.size());
         }
         System.out.println();
     }
@@ -509,7 +526,7 @@ public class Menu {
         System.out.println(" Новый абитуриент ");
         String name = readString(" Имя: ", false);
         String lastname = readString(" Фамилия: ", false);
-        int score = readInt(" Балл ЕГЭ (0-400): ",0,400);
+        int score = readInt(" Балл ЕГЭ (0-400): ", 0, 400);
 
         UniversityApplicant a = new UniversityApplicant.UniversityApplicantBuilder()
                 .name(name)
@@ -547,11 +564,11 @@ public class Menu {
         }
 
         System.out.println(" Текущий список:");
-        for (int i=0; i < applicants.size(); i++) {
+        for (int i = 0; i < applicants.size(); i++) {
             System.out.println("   " + (i + 1) + ". " + applicants.get(i));
         }
 
-        int index = readInt(" Номер записи для редактирования (1-" +applicants.size() + "):",
+        int index = readInt(" Номер записи для редактирования (1-" + applicants.size() + "):",
                 1, applicants.size());
         UniversityApplicant old = applicants.get(index - 1);
 
@@ -569,7 +586,7 @@ public class Menu {
         if (scoreStr.isEmpty()) {
             score = old.getExamScore();
         } else {
-            score = readInt(" Новый балл ЕГЭ (0-400): ",0,400);
+            score = readInt(" Новый балл ЕГЭ (0-400): ", 0, 400);
         }
 
         UniversityApplicant updated = new UniversityApplicant.UniversityApplicantBuilder()
@@ -607,7 +624,7 @@ public class Menu {
 
         int n = applicants.size();
         for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - 1 - j; j++) {
+            for (int j = 0; j < n - 1 - i; j++) {
                 UniversityApplicant a = applicants.get(j);
                 UniversityApplicant b = applicants.get(j + 1);
                 if (a.getExamScore() < b.getExamScore()) {

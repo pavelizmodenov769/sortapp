@@ -4,9 +4,9 @@ import com.team.sortapp.ui.Menu;
 
 import java.util.Scanner;
 
-public class Aplication {
+public class Application {
 
-    private Aplication() {
+    private Application() {
 
     }
 

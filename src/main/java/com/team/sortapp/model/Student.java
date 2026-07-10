@@ -4,7 +4,7 @@ import com.team.sortapp.exception.ValidationException;
 
 import java.util.Objects;
 
-public class Student {
+public final class Student {
     private final int group;
     private final double averageScore;
     private final long creditBook;
@@ -40,8 +40,8 @@ public class Student {
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
         return Double.compare(averageScore, student.averageScore) == 0 &&
-                Objects.equals(group, student.group) &&
-                Objects.equals(creditBook, student.creditBook);
+                group == student.group &&
+                creditBook == student.creditBook;
     }
 
     @Override
@@ -50,25 +50,30 @@ public class Student {
     }
 
     // Builder for Student
-    // Обёртки, чтобы отличать "не установлено"
 
-    public static class StudentBuilder {
-        private Integer group;
-        private Double averageScore;
-        private Long creditBook;
+    public static final class StudentBuilder {
+        private int group;
+        private double averageScore;
+        private long creditBook;
+        private boolean groupSet;
+        private boolean averageScoreSet;
+        private boolean creditBookSet;
 
-        public StudentBuilder setGroup(Integer group) {
+        public StudentBuilder setGroup(int group) {
             this.group = group;
+            this.groupSet = true;
             return this;
         }
 
-        public StudentBuilder setAverageScore(Double averageScore) {
+        public StudentBuilder setAverageScore(double averageScore) {
             this.averageScore = averageScore;
+            this.averageScoreSet = true;
             return this;
         }
 
-        public StudentBuilder setCreditBook(Long creditBook) {
+        public StudentBuilder setCreditBook(long creditBook) {
             this.creditBook = creditBook;
+            this.creditBookSet = true;
             return this;
         }
 
@@ -78,19 +83,19 @@ public class Student {
         }
 
         private void validate() {
-            if (group == null) {
+            if (!groupSet) {
                 throw new ValidationException("Не указан номер группы.");
             }
 
-            if (averageScore == null) {
+            if (!averageScoreSet) {
                 throw new ValidationException("Средний балл не указан.");
             }
 
-            if (averageScore < 0 || averageScore > 5) {
-                throw new ValidationException("Оценка не может быть меньше 0 и больше 5.");
+            if (averageScore < 0 || averageScore > 10) {
+                throw new ValidationException("Оценка не может быть меньше 0 и больше 10.");
             }
 
-            if (creditBook == null) {
+            if (!creditBookSet) {
                 throw new ValidationException("Номер зачетной книжки не указан.");
             }
 

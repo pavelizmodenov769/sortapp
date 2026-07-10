@@ -1,4 +1,4 @@
-package com.team.sortapp.io.io.util;
+package com.team.sortapp.io.util;
 
 import com.team.sortapp.exception.ValidationException;
 import com.team.sortapp.model.Student;

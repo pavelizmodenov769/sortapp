@@ -1,4 +1,4 @@
-package com.team.sortapp.io.io;
+package com.team.sortapp.io;
 
 import com.team.sortapp.collection.CustomList;
 import com.team.sortapp.model.Student;
@@ -17,7 +17,7 @@ public class ResultWriter {
 
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-            pw.println(" БЛОК: " + operationLabel + " ===");
+            pw.println("=== БЛОК: " + operationLabel + " ===");
             pw.println(" Время записи: " + timestamp);
 
             for (Student student : list) {
@@ -32,5 +32,6 @@ public class ResultWriter {
     }
 
     public static void appendToFile(Path path, CustomList<Student> students) {
+        appendToFile(path.toString(), students, "Результаты сортировки");
     }
 }

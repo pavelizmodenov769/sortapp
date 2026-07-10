@@ -28,58 +28,24 @@ public class QuickSort<T> implements SortStrategy<T> {
     }
 
     private int partition(CustomList<T> list, Comparator<? super T> comparator, int low, int high) {
-        int mid = low + (high - low) / 2;
-        T lowVal = list.get(low);
-        T midVal = list.get(mid);
-        T highVal = list.get(high);
+        T pivot = list.get(high);
+        int i = low - 1;
 
-        if (comparator.compare(lowVal, midVal) > 0) {
-            list.set(low, midVal);
-            list.set(mid, lowVal);
-            lowVal = list.get(low);
-            midVal = list.get(mid);
-        }
-        if (comparator.compare(lowVal, highVal) > 0) {
-            list.set(low, highVal);
-            list.set(high, lowVal);
-            lowVal = list.get(low);
-            highVal = list.get(high);
-        }
-        if (comparator.compare(midVal, highVal) > 0) {
-            list.set(mid, highVal);
-            list.set(high, midVal);
-            midVal = list.get(mid);
-            highVal = list.get(high);
-        }
-
-        list.set(mid, list.get(high - 1));
-        list.set(high - 1, midVal);
-        T pivot = list.get(high - 1);
-
-        int i = low;
-        int j = high - 1;
-
-        while (true) {
-            do {
+        for (int j = low; j < high; j++) {
+            if (comparator.compare(list.get(j), pivot) <= 0) {
                 i++;
-            } while (comparator.compare(list.get(i), pivot) < 0);
-
-            do {
-                j--;
-            } while (j > low && comparator.compare(list.get(j), pivot) > 0);
-
-            if (i >= j) {
-                break;
+                swap(list, i, j);
             }
-
-            T temp = list.get(i);
-            list.set(i, list.get(j));
-            list.set(j, temp);
         }
 
-        list.set(high - 1, list.get(i));
-        list.set(i, pivot);
-        return i;
+        swap(list, i + 1, high);
+        return i + 1;
+    }
+
+    private void swap(CustomList<T> list, int a, int b) {
+        T tmp = list.get(a);
+        list.set(a, list.get(b));
+        list.set(b, tmp);
     }
 
     @Override

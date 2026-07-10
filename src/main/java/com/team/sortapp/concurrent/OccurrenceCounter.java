@@ -17,17 +17,17 @@ public class OccurrenceCounter {
 
     public static int countCreditBookOccurrences(CustomList<Student> students, long target) {
         if (students == null) {
-            throw new IllegalArgumentException("students is not null");
+            throw new IllegalArgumentException("Список студентов не должен быть null");
         }
         int size = students.size();
 
         if (size == 0) {
-            System.out.println("Занчение " + target + " встречается 0 раз.");
+            System.out.println("Значение " + target + " встречается 0 раз.");
             return 0;
         }
 
         int availableCores = Runtime.getRuntime().availableProcessors();
-        int numThreads = Math.min(availableCores, Math.max(1, size/ MIN_CHUNK_SIZE));
+        int numThreads = Math.min(availableCores, Math.max(1, size / MIN_CHUNK_SIZE));
 
         int chunkSize = size / numThreads;
 
@@ -48,11 +48,21 @@ public class OccurrenceCounter {
                 Thread.currentThread().interrupt();
                 System.err.println("Подсчет прерван");
             } catch (ExecutionException e) {
-                System.err.println("Ошибка в потоке: " + e.getCause().getMessage());
+                Throwable cause = e.getCause();
+                String reason = cause != null ? cause.getMessage() : e.getMessage();
+                System.err.println("Ошибка в потоке: " + reason);
             }
         }
 
         executor.shutdown();
+        try {
+            if (!executor.awaitTermination(1, TimeUnit.MINUTES)) {
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
 
         System.out.println("Значение " + target + " встречается " + total + " раз.");
         return total;
@@ -60,7 +70,7 @@ public class OccurrenceCounter {
 
     private static final class ChunkCounter implements Callable<Integer> {
 
-        private  final CustomList<Student> students;
+        private final CustomList<Student> students;
         private final long target;
         private final int from;
         private final int to;
