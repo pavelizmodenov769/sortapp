@@ -1,6 +1,5 @@
 package com.team.sortapp.collection;
 
-import java.util.function.Consumer;
 
 public interface CustomList<T> extends Iterable<T> {
 
