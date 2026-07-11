@@ -42,31 +42,9 @@ feature/io ───────────────────────
 - `feature/sorting` и `feature/io` можно мержить параллельно (не зависят друг от друга).
 - `feature/threading-ui` мержится последним — интегрирует все модули.
 
-## Сборка и запуск (без Maven)
-
-Из папки `sortapp/`:
-
-```bash
-# Компиляция
-javac -encoding UTF-8 -d out \
-  $(find src/main/java -name "*.java")
-
-# Запуск
-java -cp out com.team.sortapp.Application
-```
-
-## Сборка и запуск (через Maven, опционально)
-
-```bash
-mvn clean compile
-mvn exec:java -Dexec.mainClass="com.team.sortapp.Application"
-```
-
 ## Соглашения по кодстайлу (Java Conventions)
 
-- Пакеты — `lowercase`, классы — `PascalCase`, методы/поля — `camelCase`, константы — `UPPER_SNAKE`.
 - Один класс — один файл (кроме вложенных, как `Builder`).
-- Javadoc на всех публичных методах интерфейсов и ключевых классов.
 - Отступы — 4 пробела, кодировка UTF-8.
 - **Запрещено** использовать готовые реализации сортировки (`Arrays.sort`,
   `Collections.sort`, `List.sort`, `Stream.sorted`) и готовые паттерны из библиотек.
@@ -75,7 +53,3 @@ mvn exec:java -Dexec.mainClass="com.team.sortapp.Application"
 
 Тесты — **ручные**, в отдельных классах с `main`-методом в пакете
 `com.team.sortapp.manual`. Запуск каждого:
-
-```bash
-java -cp out com.team.sortapp.manual.StudentManualTest
-```
