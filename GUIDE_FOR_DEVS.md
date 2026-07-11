@@ -41,8 +41,8 @@
 Первым создаёт пакеты:
 ```
 com/team/sortapp/
-├── model/        ← сюда Student
-├── collection/   ← сюда CustomList
+├── com.team.sortapp.model/        ← сюда Student
+├── com.team.sortapp.collection/   ← сюда CustomList
 └── exception/    ← сюда ValidationException
 ```
 
