@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class ResultWriter {
     public static void appendToFile(String filePath, CustomList<Student> list, String operationLabel) {
@@ -22,7 +23,7 @@ public class ResultWriter {
 
             for (Student student : list) {
                 // Записываем в формате, пригодном для обратного чтения: группа, балл, зачетка
-                pw.printf("%d,%.2f,%d%n", student.getGroup(), student.getAverageScore(), student.getCreditBook());
+                pw.printf(Locale.US, "%d,%.2f,%d%n", student.getGroup(), student.getAverageScore(), student.getCreditBook());
             }
             pw.println(); // Разделительный пустой отступ между блоками данных
 
