@@ -13,10 +13,10 @@ public class RandomDataProvider implements DataProvider {
     @Override
     public CustomList<Student> provide(int count) {
         Stream<Student> studentStream = Stream.generate(() -> {
-            int group = random.nextInt(50) + 1; // 1 - 50
-            double score = 2.0 + (random.nextDouble() * 8.0); // 2.0 - 10.0
+            int group = random.nextInt(50) + 1;
+            double score = 2.0 + (random.nextDouble() * 8.0);
             score = Math.round(score * 100.0) / 100.0;
-            long gradeBook = 100000L + random.nextInt(900000); // 6 знаков
+            long gradeBook = 100000L + random.nextInt(900000);
 
             return new Student.StudentBuilder()
                     .setGroup(group)

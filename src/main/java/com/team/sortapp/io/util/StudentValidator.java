@@ -28,7 +28,6 @@ public class StudentValidator {
             throw new ValidationException("Номер зачетной книжки должен быть целым числом. Получено: '" + rawGradeBook + "'");
         }
 
-        // Проверка бизнес-правил, согласованных с Dev 1
         if (group <= 0) {
             throw new ValidationException("Номер группы должен быть больше 0. Получено: " + group);
         }
@@ -39,7 +38,6 @@ public class StudentValidator {
             throw new ValidationException("Номер зачетной книжки должен быть больше 0. Получено: " + gradeBook);
         }
 
-        // Собираем объект через Builder от Dev 1
         return new Student.StudentBuilder()
                 .setGroup(group)
                 .setAverageScore(score)

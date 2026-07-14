@@ -13,7 +13,6 @@ import java.util.Locale;
 
 public class ResultWriter {
     public static void appendToFile(String filePath, CustomList<Student> list, String operationLabel) {
-        // Открываем FileWriter в режиме APPEND (второй параметр true)
         try (FileWriter fw = new FileWriter(filePath, true); PrintWriter pw = new PrintWriter(fw)) {
 
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -22,10 +21,9 @@ public class ResultWriter {
             pw.println(" Время записи: " + timestamp);
 
             for (Student student : list) {
-                // Записываем в формате, пригодном для обратного чтения: группа, балл, зачетка
                 pw.printf(Locale.US, "%d,%.2f,%d%n", student.getGroup(), student.getAverageScore(), student.getCreditBook());
             }
-            pw.println(); // Разделительный пустой отступ между блоками данных
+            pw.println();
 
         } catch (IOException e) {
             System.out.println(" Ошибка при записи результатов в файл: " + e.getMessage());
